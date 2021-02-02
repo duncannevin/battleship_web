@@ -9,6 +9,10 @@ const route = {
   component: Auth,
   children: [
     {
+      path: '',
+      redirect: 'signup'
+    },
+    {
       path: 'signup',
       component: Signup
     },

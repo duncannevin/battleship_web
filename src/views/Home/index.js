@@ -1,3 +1,9 @@
 import Home from './Home';
 
-export default Home;
+const route = {
+  path: '/',
+  name: 'Home',
+  component: Home
+};
+
+export default route;
