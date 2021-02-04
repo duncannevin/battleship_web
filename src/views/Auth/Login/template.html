@@ -1,3 +1,23 @@
-<div id="Login">
-  <p>Don't have an account? <router-link :to="{ name: 'Signup' }">Signup</router-link></p>
+<div id="Login" class="card">
+  <div class="card-body">
+    <div>
+      <form class="auth-form">
+        <div>
+          <div>
+            <label for="Login-email">Email: </label>
+          </div>
+          <input type="text" id="Login-email" />
+        </div>
+        <div>
+          <div>
+            <label for="Login-pw">Password: </label>
+          </div>
+          <input type="text" id="Login-pw" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card-footer">
+    <p>Don't have an account? <router-link :to="{ name: 'Signup' }">Signup</router-link></p>
+  </div>
 </div>

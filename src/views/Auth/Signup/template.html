@@ -1,5 +1,39 @@
-<div id="Signup">
-  <div>
+<div id="Signup" class="card">
+  <div class="card-body">
+    <div>
+      <form class="auth-form" @submit="submit">
+        <div>
+          <div>
+            <label for="Signup-email">Email: </label>
+          </div>
+          <input type="email" id="Signup-email" v-model="email" />
+        </div>
+        <div>
+          <div>
+            <label for="Signup-pw1">Password: </label>
+          </div>
+          <input type="password" id="Signup-pw1" v-model="password1" />
+        </div>
+        <div>
+          <div>
+            <label for="Signup-pw2">Password Again: </label>
+          </div>
+          <input type="password" id="Signup-pw2" v-model="password" />
+        </div>
+        <br>
+        <input type="submit" value="Submit" />
+        <div class="auth-error">
+          {{ errorMsg }}
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card-footer">
+    <pre>
+      email: {{ email }}
+      password1: {{ password1 }}
+      password: {{ password }}
+    </pre>
     <p>Already have an account? <router-link :to="{ name: 'Login' }">Login</router-link></p>
   </div>
 </div>

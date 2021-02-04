@@ -1,11 +1,12 @@
 <template>
   <div id="app">
-    <router-link :to="{ name: 'Home' }" tag="h1">Battleship</router-link>
+    <div id="Nav">
+      <router-link :to="{ name: 'Home' }" tag="h1">Battleship</router-link>
+    </div>
     <router-view />
   </div>
 </template>
-
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,16 +15,39 @@
   color: #2c3e50;
 }
 
-#nav {
+#Nav {
   padding: 30px;
+
+  h1 {
+    cursor: pointer;
+  }
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.card {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #000;
+  margin: 0 auto;
+
+  & > div {
+    padding: 1rem;
+  }
+
+  .card-footer {
+    border-top: 1px solid #000;
+  }
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.auth-form {
+  width: fit-content;
+  margin: 0 auto;
+
+  * {
+    text-align: left;
+  }
+
+  .auth-error {
+    color: #ff0000;
+  }
 }
 </style>
