@@ -13,10 +13,12 @@ const route = {
       redirect: 'signup'
     },
     {
+      name: 'Signup',
       path: 'signup',
       component: Signup
     },
     {
+      name: 'Login',
       path: 'login',
       component: Login
     }

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-link :to="{ name: 'Home' }" tag="h1">Battleship</router-link>
     <router-view />
   </div>
 </template>
