@@ -1,0 +1,15 @@
+#Toaster {
+  position: relative;
+  margin-top: 0;
+  z-index: 1000;
+  width: 100px;
+  float: right;
+
+  .toaster {
+    border: 1px solid #000;
+    position: absolute;
+    height: 40px;
+    width: 100px;
+    float: right;
+  }
+}

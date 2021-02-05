@@ -1,11 +1,30 @@
 <template>
   <div id="app">
+    <Toaster></Toaster>
     <div id="Nav">
       <router-link :to="{ name: 'Home' }" tag="h1">Battleship</router-link>
     </div>
     <router-view />
   </div>
 </template>
+<script>
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import Toaster from '@/components/Toaster';
+
+@Component({
+  components: {
+    Toaster
+  }
+})
+export default class App extends Vue {
+  name = 'App';
+
+  get toasters() {
+    return this.$store.state.ToasterStore.toasters;
+  }
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

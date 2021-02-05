@@ -1,0 +1,9 @@
+<div id="Toaster">
+  <div
+    v-for="({type, msg}, ind) in toasters" class="toaster"
+    :class="'toaster-' + type"
+    :style="{ top: ((40 * ind)) + 'px' }"
+  >
+    <p>{{ msg }}</p>
+  </div>
+</div>

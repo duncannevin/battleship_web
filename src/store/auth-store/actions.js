@@ -1,19 +1,14 @@
 import axios from 'axios';
-import router from '@/router';
 
-const authLocation = 'http://192.168.99.100:8080/auth/v1';
+const authLocation = 'http://192.168.99.100:9999/v1/auth';
 const AuthActions = {
   async signup({ commit, state }) {
-    try {
-      const body = {
-        email: state.email,
-        password: state.password
-      };
-      const response = await axios.post(`${authLocation}/register`, body);
-      commit('setAuthToken', response.token);
-    } catch (e) {
-      router.push({ name: 'Home' });
-    }
+    const body = {
+      email: state.email,
+      password: state.password
+    };
+    const response = await axios.post(`${authLocation}/register`, body);
+    return commit('setAuthToken', response.token);
   }
 };
 
