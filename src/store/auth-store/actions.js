@@ -35,6 +35,21 @@ const AuthActions = {
 
       throw new Error('Unauthorized');
     }
+  },
+  async validateToken({ commit }) {
+    const storedToken = localStorage.getItem('AUTH_TOKEN');
+
+    if (storedToken) {
+      try {
+        const { data } = await axios.get(`${authLocation}/validate_token`);
+        commit('setAuthToken', data.token);
+        commit('updateEmail', data.email);
+        return data;
+      } catch (e) {
+        localStorage.removeItem('AUTH_TOKEN');
+        throw new Error('Unauthorized');
+      }
+    }
   }
 };
 
