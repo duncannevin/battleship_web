@@ -14,15 +14,12 @@
           </div>
           <input type="text" id="Login-pw" v-model="password" />
         </div>
+        <br>
         <input type="submit" value="Submit" />
       </form>
     </div>
   </div>
   <div class="card-footer">
-    <pre>
-      email: {{ email }}
-      password: {{ password }}
-    </pre>
     <p>Don't have an account? <router-link :to="{ name: 'Signup' }">Signup</router-link></p>
   </div>
 </div>
