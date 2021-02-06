@@ -17,28 +17,9 @@ export default class Signup extends Vue {
       await this.$store.dispatch('AuthStore/signup');
       await router.push({ name: 'Game' });
     } catch (e) {
-      console.log(e);
-      const statusCode = e.response.status;
-
-      if (statusCode > 499) {
-        await this.$store.dispatch('ToasterStore/pushToaster', {
-          type: 'err',
-          msg: 'Internal server error'
-        });
-        return;
-      }
-
-      if (statusCode === 403) {
-        await this.$store.dispatch('ToasterStore/pushToaster', {
-          type: 'err',
-          msg: 'Email in use'
-        });
-        return;
-      }
-
       await this.$store.dispatch('ToasterStore/pushToaster', {
         type: 'err',
-        msg: 'Unauthorized'
+        msg: e
       });
     }
   }

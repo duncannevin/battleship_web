@@ -1,23 +1,28 @@
 <div id="Login" class="card">
   <div class="card-body">
     <div>
-      <form class="auth-form">
+      <form class="auth-form" @submit="submit">
         <div>
           <div>
             <label for="Login-email">Email: </label>
           </div>
-          <input type="text" id="Login-email" />
+          <input type="text" id="Login-email" v-model="email" />
         </div>
         <div>
           <div>
             <label for="Login-pw">Password: </label>
           </div>
-          <input type="text" id="Login-pw" />
+          <input type="text" id="Login-pw" v-model="password" />
         </div>
+        <input type="submit" value="Submit" />
       </form>
     </div>
   </div>
   <div class="card-footer">
+    <pre>
+      email: {{ email }}
+      password: {{ password }}
+    </pre>
     <p>Don't have an account? <router-link :to="{ name: 'Signup' }">Signup</router-link></p>
   </div>
 </div>
