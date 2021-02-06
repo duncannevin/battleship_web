@@ -7,7 +7,7 @@ import Game from '@/views/Game';
 
 Vue.use(VueRouter);
 
-const routes = [Home, Auth, Game];
+const routes = [Home, Auth, Game, { path: '*', redirect: '/' }];
 
 const router = new VueRouter({
   mode: 'history',
