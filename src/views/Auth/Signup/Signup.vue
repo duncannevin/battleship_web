@@ -17,6 +17,7 @@ export default class Signup extends Vue {
       await this.$store.dispatch('AuthStore/signup');
       await router.push({ name: 'Game' });
     } catch (e) {
+      console.log(e);
       const statusCode = e.response.status;
 
       if (statusCode > 499) {
