@@ -1,18 +1,21 @@
 <div id="Login" class="card">
   <div class="card-body">
-    <div>
+    <div class="card-header">
+      <h3>Login</h3>
+    </div>
+    <div class="card-body">
       <form class="auth-form" @submit="submit">
         <div>
           <div>
             <label for="Login-email">Email: </label>
           </div>
-          <input type="text" id="Login-email" v-model="email" />
+          <input type="email" id="Login-email" v-model="email" />
         </div>
         <div>
           <div>
             <label for="Login-pw">Password: </label>
           </div>
-          <input type="text" id="Login-pw" v-model="password" />
+          <input type="password" id="Login-pw" v-model="password" />
         </div>
         <br>
         <input type="submit" value="Submit" />

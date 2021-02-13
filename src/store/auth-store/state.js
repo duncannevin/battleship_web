@@ -1,4 +1,5 @@
 const AuthState = {
+  id: '',
   password: '',
   email: '',
   authToken: null

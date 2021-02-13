@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const authLocation = 'http://192.168.99.100:9999/v1/auth';
+const authLocation = '/auth';
+const usersLocation = '/users';
 const AuthActions = {
   async signup({ commit, state }) {
     try {
       const { data } = await doAuth('register', state);
-      commit('setAuthToken', data.token);
+      await commit('setAuthToken', data.token);
       return data;
     } catch (e) {
       const statusCode = e.response.status;
@@ -24,7 +25,7 @@ const AuthActions = {
   async login({ commit, state }) {
     try {
       const { data } = await doAuth('login', state);
-      commit('setAuthToken', data.token);
+      await commit('setAuthToken', data.token);
       return data;
     } catch (e) {
       const statusCode = e.response.status;
@@ -41,14 +42,15 @@ const AuthActions = {
 
     if (storedToken) {
       try {
-        const { data } = await axios.get(`${authLocation}/validate_token`);
-        commit('setAuthToken', data.token);
+        const { data } = await axios.get(usersLocation);
         commit('updateEmail', data.email);
+        commit('updateId', data.id);
         return data;
       } catch (e) {
-        localStorage.removeItem('AUTH_TOKEN');
         throw new Error('Unauthorized');
       }
+    } else {
+      throw new Error('Unauthorized');
     }
   }
 };

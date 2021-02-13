@@ -37,8 +37,18 @@ html {
   text-align: center;
 
   &,
-  a {
+  a,
+  button,
+  input[type='submit'] {
     color: aliceblue;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
   }
 }
 
@@ -48,6 +58,13 @@ html {
   h1 {
     cursor: pointer;
   }
+}
+
+input[type='submit'],
+button {
+  padding: 6px;
+  border-radius: 5px;
+  background-color: transparent;
 }
 
 .card {
