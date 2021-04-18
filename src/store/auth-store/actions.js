@@ -1,7 +1,7 @@
-import axios from 'axios';
+import API from '../../api';
 
 const authLocation = '/auth';
-const usersLocation = '/users';
+
 const AuthActions = {
   async signup({ commit, state }) {
     try {
@@ -42,7 +42,7 @@ const AuthActions = {
 
     if (storedToken) {
       try {
-        const { data } = await axios.get(usersLocation);
+        const { data } = await API.get(`${authLocation}/users`);
         commit('updateEmail', data.email);
         commit('updateId', data.id);
         return data;
@@ -62,5 +62,5 @@ async function doAuth(kind, state) {
     email: state.email,
     password: state.password
   };
-  return await axios.post(`${authLocation}/${kind}`, reqBody);
+  return await API.post(`${authLocation}/${kind}`, reqBody);
 }
