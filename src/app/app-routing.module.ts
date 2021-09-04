@@ -12,7 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: 'auth',
-        loadChildren: () => import('./pages/auth/auth-routing.module').then(m => m.AuthRoutingModule)
+        loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+      },
+      {
+        path: 'game',
+        loadChildren: () => import('./pages/game/game.module').then(m => m.GameModule)
       }
     ]
   }
