@@ -7,3 +7,19 @@
 // If you want to add something do it here
 @import "custom";
 
+app-root {
+  @extend .bg-light,
+  .min-vh-100,
+  .min-vw-100,
+  .d-flex,
+  .flex-row;
+}
+
+.centered-layout {
+  @extend
+  .d-flex,
+  .min-vh-100,
+  .min-vw-100,
+  .align-items-center,
+  .justify-content-center;
+}
