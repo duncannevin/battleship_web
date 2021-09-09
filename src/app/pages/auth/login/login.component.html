@@ -1,24 +1,24 @@
 <div class="card-group col-md-12 m-auto">
   <div class="card p-4">
     <div class="card-body">
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="doLogin()">
         <h1>Login</h1>
         <p class="text-muted">Sign In to your account</p>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text"><i class="icon-user"></i></span>
+            <span class="input-group-text"><i class="icon-email"></i></span>
           </div>
-          <input type="text" class="form-control" placeholder="Username" autocomplete="username" required>
+          <input formControlName="email" type="email"  [ngClass]="{ 'border-danger': submitted && loginForm.controls.email.errors }" class="form-control" placeholder="sam@gmail.com" autocomplete="email" required>
         </div>
         <div class="input-group mb-4">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="icon-lock"></i></span>
           </div>
-          <input type="password" class="form-control" placeholder="Password" autocomplete="current-password" required>
+          <input formControlName="password" type="password"  [ngClass]="{ 'border-danger': submitted && loginForm.controls.password.errors }" class="form-control" placeholder="Password" autocomplete="current-password" required>
         </div>
         <div class="row">
           <div class="col-4">
-            <button type="button" class="btn btn-primary px-4">Login</button>
+            <button type="submit" class="btn btn-primary px-4" [disabled]="!loginForm.valid">Login</button>
           </div>
           <div class="col-8 d-flex align-items-end justify-content-end">
             <a href="#" routerLink="/auth/register">Don't have an account?</a>

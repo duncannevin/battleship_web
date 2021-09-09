@@ -107,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "battleship-web"
+  "defaultProject": "battleship-web",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
