@@ -47,6 +47,25 @@ export class UserEffects {
         })
       ));
 
+  getUserDetails$ = createEffect(
+    () => this.actions$
+      .pipe(
+        ofType<UserAction>(UserActionTypes.getUserDetails),
+        mergeMap((action) => {
+          if (!action.payload || !action.payload.user) {
+            throw new Error('[getUserDetails] Invalid payload');
+          }
+
+          return this.userService.getUserDetails(action.payload.user)
+            .pipe(
+              tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
+              map((user) => (new LoadUserSuccess({ user }))),
+              catchError((error) => of(new LoadUserFailure({ error })))
+            )
+        })
+      )
+  );
+
   constructor(private actions$: Actions, private store: Store<State>, private userService: UserService, private localStorage: LocalStorageService) {
   }
 }

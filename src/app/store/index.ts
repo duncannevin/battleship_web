@@ -1,5 +1,5 @@
 import {
-  ActionReducerMap,
+  ActionReducerMap, createSelector,
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
@@ -17,3 +17,8 @@ export const metaReducers: MetaReducer<State>[] = !environment.production ? [] :
 
 export const selectUser = (state: State) => state.user.user;
 export const selectUserError = (state: State) => state.user.error;
+export const isUserAuthorized = createSelector(
+  selectUser,
+  selectUser,
+  (user, error) => user && !error
+);
