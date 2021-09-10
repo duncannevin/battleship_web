@@ -1,6 +1,5 @@
-import {Action} from "@ngrx/store";
-import {User} from "../../models/user.model";
-import {UserAction} from "./user.actions";
+import {User} from '../../models/user.model';
+import {UserAction, UserActionTypes} from './user.actions';
 
 export interface UserState {
   user: User | null,
@@ -14,6 +13,10 @@ const initialState: UserState = {
 
 export function userReducer(state: UserState = initialState, action: UserAction) {
   switch (action.type) {
+    case UserActionTypes.loadUserSuccess:
+      return { ...state, ...action.payload, error: null };
+    case UserActionTypes.loadUserFailure:
+      return { ...state, user: null, ...action.payload };
     default:
       return state;
   }

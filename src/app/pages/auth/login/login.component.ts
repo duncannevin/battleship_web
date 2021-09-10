@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../services/user.service";
+import {FormBuilder, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {State} from "../../../store";
 import {LoginUser} from "../../../store/user/user.actions";
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
   doLogin() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      this.store.dispatch(new LoginUser({login: this.loginForm.value}))
+      this.store.dispatch(new LoginUser({login: this.loginForm.value}));
     }
   }
 
