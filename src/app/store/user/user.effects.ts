@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {act, Actions, createEffect, ofType} from '@ngrx/effects';
-import {Store} from '@ngrx/store';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {Action, Store} from '@ngrx/store';
 import {State} from '../index';
 import {UserService} from '../../services/user.service';
 import {LoadUserFailure, LoadUserSuccess, UserAction, UserActionTypes} from './user.actions';
 import {catchError, map, mergeMap, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {LocalStorageService, STORAGE_KEYS} from '../../services/local-storage.service';
 import {User} from '../../models/user.model';
 
@@ -15,17 +15,15 @@ export class UserEffects {
     () => this.actions$
       .pipe(
         ofType<UserAction>(UserActionTypes.loginUser),
-        mergeMap((action) => {
+        mergeMap((action: UserAction) => {
           if (!action.payload || !action.payload.login) {
-            throw new Error('[loginUser$] Invalid payload');
+            throw new Error('[getUserDetails] Invalid payload');
           }
 
           return this.userService.login(action.payload.login)
             .pipe(
-              tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
-              map((user) => (new LoadUserSuccess({user}))),
-              catchError((error) => of(new LoadUserFailure({error})))
-            );
+              this.setUser()
+            )
         })
       ));
 
@@ -40,9 +38,7 @@ export class UserEffects {
 
           return this.userService.register(action.payload.register)
             .pipe(
-              tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
-              map((user) => (new LoadUserSuccess({user}))),
-              catchError((error) => of(new LoadUserFailure({error})))
+              this.setUser()
             );
         })
       ));
@@ -58,13 +54,21 @@ export class UserEffects {
 
           return this.userService.getUserDetails(action.payload.user)
             .pipe(
-              tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
-              map((user) => (new LoadUserSuccess({ user }))),
-              catchError((error) => of(new LoadUserFailure({ error })))
+              this.setUser()
             )
         })
       )
   );
+
+  private setUser() {
+    return (source: Observable<User>): Observable<Action> => {
+      return source.pipe(
+        tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
+        map((user) => (new LoadUserSuccess({user}))),
+        catchError((error) => of(new LoadUserFailure({error})))
+      );
+    }
+  }
 
   constructor(private actions$: Actions, private store: Store<State>, private userService: UserService, private localStorage: LocalStorageService) {
   }

@@ -4,6 +4,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import {userReducer, UserState} from "./user/user.reducer";
+import * as userSelectors from './user/user.selectors';
 
 export interface State {
   user: UserState
@@ -15,10 +16,6 @@ export const reducers: ActionReducerMap<State> = {
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
-export const selectUser = (state: State) => state.user.user;
-export const selectUserError = (state: State) => state.user.error;
-export const isUserAuthorized = createSelector(
-  selectUser,
-  selectUser,
-  (user, error) => user && !error
-);
+export const selectors = {
+  user: userSelectors
+}

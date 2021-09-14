@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from './guards/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {GameGuard} from './guards/game-guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/game',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: '',
@@ -16,11 +16,15 @@ const routes: Routes = [
         loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
       },
       {
+        canActivate: [GameGuard],
         path: 'game',
-        canActivate: [AuthGuard],
         loadChildren: () => import('./pages/game/game.module').then(m => m.GameModule)
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: '/game'
   }
 ];
 
@@ -28,4 +32,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

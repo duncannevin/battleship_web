@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {UtilsService} from '../../../services/utils.service';
-import {LoginUser, RegisterUser} from '../../../store/user/user.actions';
+import {RegisterUser, UserActionTypes} from '../../../store/user/user.actions';
 import {Store} from '@ngrx/store';
 import {State} from '../../../store';
+import {Subscription} from 'rxjs';
+import {Actions, ofType} from '@ngrx/effects';
+import {User} from '../../../models/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+  loadUserSuccessSub: Subscription;
   submitted: boolean = false;
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -19,6 +23,16 @@ export class RegisterComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.loadUserSuccessSub = this.actions$
+      .pipe(ofType(UserActionTypes.loadUserSuccess))
+      .subscribe((user: User) => {
+        this.router.navigate(['/game'])
+        this.loadUserSuccessSub.unsubscribe();
+      })
+  }
+
+  ngOnDestroy() {
+    this.loadUserSuccessSub.unsubscribe();
   }
 
   doRegister() {
@@ -44,6 +58,6 @@ export class RegisterComponent implements OnInit {
     return 'passwords do not match';
   }
 
-  constructor(private fb: FormBuilder, private store: Store<State>) {
+  constructor(private actions$: Actions, private router: Router, private fb: FormBuilder, private store: Store<State>) {
   }
 }
