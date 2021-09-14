@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { reducers, metaReducers } from './store';
 import {HttpClientModule} from "@angular/common/http";
 import {UserEffects} from "./store/user/user.effects";
+import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,13 @@ import {UserEffects} from "./store/user/user.effects";
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    IconModule,
+    IconSetModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    IconSetService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -24,7 +24,7 @@
         </div>
         <div class="row">
           <div class="col-4">
-            <button type="submit" class="btn btn-primary px-4">Register</button>
+            <button type="submit" class="btn btn-primary px-4" [disabled]="!registerForm.valid">Register</button>
           </div>
           <div class="col-8 d-flex align-items-end justify-content-end">
             <a href="#" routerLink="/auth/login">Already have an account?</a>
