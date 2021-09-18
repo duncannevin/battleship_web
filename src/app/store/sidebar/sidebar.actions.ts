@@ -1,6 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {INavData} from '@coreui/angular';
-import {PushChildINav} from '../../models/push-child-inav.model';
+import {SIDEBAR_SECTION} from './sidebar.reducer';
 
 export enum SidebarActionTypes {
   pushItem = '[Sidebar] Push item',
@@ -8,6 +8,5 @@ export enum SidebarActionTypes {
   pushChildItem = '[Sidebar] Push child item'
 }
 
-export const pushSidebarItem = createAction(SidebarActionTypes.pushItem, props<{ iNav: INavData }>());
-export const pushSidebarChild = createAction(SidebarActionTypes.pushChildItem, props<{ childINav: PushChildINav }>());
-export const removeSidebarItem = createAction(SidebarActionTypes.removeItem, props<{ name: string}>());
+export const pushSidebarItem = createAction(SidebarActionTypes.pushItem, props<{ section: SIDEBAR_SECTION, iNav: INavData }>());
+export const removeSidebarItem = createAction(SidebarActionTypes.removeItem, props<{ section: SIDEBAR_SECTION, name: string}>());

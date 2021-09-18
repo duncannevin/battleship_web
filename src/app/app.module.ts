@@ -14,7 +14,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {UserEffects} from "./store/user/user.effects";
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AppSidebarModule } from '@coreui/angular'
 

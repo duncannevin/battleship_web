@@ -1,6 +1,11 @@
-<div id="game-layout">
+<div id="game-layout" class="app-body">
   <app-sidebar #appSidebar *ngIf="navItems$ | async as navItems" [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
+  <main class="main">
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>
