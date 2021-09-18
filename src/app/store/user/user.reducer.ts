@@ -3,7 +3,7 @@ import {UserAction, UserActionTypes} from './user.actions';
 
 export interface UserState {
   user: User | null,
-  error: any | null
+  error: any
 }
 
 const initialState: UserState = {

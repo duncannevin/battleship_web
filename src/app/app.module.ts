@@ -13,6 +13,14 @@ import { reducers, metaReducers } from './store';
 import {HttpClientModule} from "@angular/common/http";
 import {UserEffects} from "./store/user/user.effects";
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { AppSidebarModule } from '@coreui/angular'
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
 
 @NgModule({
   declarations: [
@@ -31,7 +39,9 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     IconModule,
-    IconSetModule.forRoot()
+    IconSetModule.forRoot(),
+    AppSidebarModule,
+    PerfectScrollbarModule
   ],
   providers: [
     IconSetService
