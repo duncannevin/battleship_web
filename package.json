@@ -28,6 +28,7 @@
     "@coreui/icons": "^2.0.0-rc.0",
     "@coreui/icons-angular": "1.0.0-alpha.3",
     "@ngrx/effects": "^12.4.0",
+    "@ngrx/entity": "^12.4.0",
     "@ngrx/store": "^12.4.0",
     "@ngrx/store-devtools": "^12.4.0",
     "bootstrap": "^4.6.0",

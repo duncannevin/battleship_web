@@ -1,24 +1,34 @@
 import {INavData} from '@coreui/angular';
-import {SidebarAction, SidebarActionTypes} from './sidebar.actions';
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {Action, createReducer, on} from '@ngrx/store';
+import * as SidebarActions from './sidebar.actions';
 
-export interface SidebarState {
-  items: INavData[]
+export interface SidebarState extends EntityState<INavData> {
 }
 
-const initialState: SidebarState = {
-  items: [
-  ]
-};
+export function selectItemNameAsId(item: INavData) {
+  return item.name!!;
+}
 
-export function sidebarReducer(state: SidebarState = initialState, action: SidebarAction) {
-  switch (action.type) {
-    case SidebarActionTypes.pushItem:
-      return action.payload?.push ?
-        { ...state, items: [...state.items, action.payload?.push] } :
-        state;
-    case SidebarActionTypes.removeItem:
-      return { ...state, items: state.items.filter((item) => item.name !== action.payload)};
-    default:
-      return state;
-  }
+export const adapter: EntityAdapter<INavData> = createEntityAdapter<INavData>({
+  selectId: selectItemNameAsId
+});
+
+export const initialState: SidebarState = adapter.getInitialState();
+
+const reducer = createReducer(
+  initialState,
+  on(SidebarActions.pushSidebarItem, (state, { iNav }) => {
+    return adapter.addOne(iNav, state);
+  }),
+  on(SidebarActions.pushSidebarChild, (state, { childINav }) => {
+    return state;
+  }),
+  on(SidebarActions.removeSidebarItem, (state, { name }) => {
+    return adapter.removeOne(name, state);
+  })
+);
+
+export function sidebarReducer(state: SidebarState | undefined, action: Action) {
+  return reducer(state, action);
 }

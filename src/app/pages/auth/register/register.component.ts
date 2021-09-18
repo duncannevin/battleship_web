@@ -1,6 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RegisterUser, UserActionTypes} from '../../../store/user/user.actions';
+import {FormBuilder, Validators} from '@angular/forms';
+import {
+  loadUserFailure,
+  loadUserSuccess,
+  registerUser
+} from '../../../store/user/user.actions';
 import {Store} from '@ngrx/store';
 import {State} from '../../../store';
 import {Observable, Subscription} from 'rxjs';
@@ -31,7 +35,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.valid) {
       const submitForm = this.registerForm.value;
       delete submitForm.password2
-      this.store.dispatch(new RegisterUser({register: submitForm}));
+      this.store.dispatch(registerUser({ registerForm: submitForm }));
     }
   }
 
@@ -50,10 +54,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private setupStreams() {
     this.loadUserSuccess$ = this.actions$
-      .pipe(ofType(UserActionTypes.loadUserSuccess));
+      .pipe(ofType(loadUserSuccess.type));
 
     this.loadUserFailure$ = this.actions$
-      .pipe(ofType(UserActionTypes.loadUserFailure));
+      .pipe(ofType(loadUserFailure.type));
   }
 
   private setupSubscriptions() {

@@ -1,5 +1,9 @@
-import {State} from '../index';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {UserState} from './user.reducer';
 
-export const selectUser = (state: State) => state.user.user;
-export const selectUserError = (state: State) => state.user.error;
-export const isUserAuthorized = (user: State) => (user.user && !user.user.error);
+export const selectUserState = createFeatureSelector<UserState>('user');
+
+export const selectIsUserAuthed = createSelector(
+  selectUserState,
+  (state: UserState) => !!state.user && !state.error
+);

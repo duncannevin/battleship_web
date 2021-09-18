@@ -1,9 +1,10 @@
 import {User} from '../../models/user.model';
-import {UserAction, UserActionTypes} from './user.actions';
+import {Action, createReducer, on} from '@ngrx/store';
+import * as UserActions from './user.actions';
 
 export interface UserState {
   user: User | null,
-  error: any
+  error: Map<string, any> | null
 }
 
 const initialState: UserState = {
@@ -11,13 +12,16 @@ const initialState: UserState = {
   error: null
 };
 
-export function userReducer(state: UserState = initialState, action: UserAction) {
-  switch (action.type) {
-    case UserActionTypes.loadUserSuccess:
-      return { ...state, ...action.payload, error: null };
-    case UserActionTypes.loadUserFailure:
-      return { ...state, user: null, ...action.payload };
-    default:
-      return state;
-  }
+const reducer = createReducer(
+  initialState,
+  on(UserActions.loadUserSuccess, (state, { user }) => {
+    return { user, error: null };
+  }),
+  on(UserActions.loadUserFailure, (state, { error }) => {
+    return { user: null, error };
+  })
+);
+
+export function userReducer(state: UserState | undefined, action: Action) {
+  return reducer(state, action);
 }

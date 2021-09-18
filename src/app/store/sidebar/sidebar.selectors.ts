@@ -1,4 +1,12 @@
-import {State} from '../index';
+import { adapter } from './sidebar.reducer';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {SidebarState} from './sidebar.reducer';
 
-export const selectSidebarItems = (state: State) => state.sidebar.items;
-export const selectSidebarItem = (state: State, name: string) => state.sidebar.items.find((item) => item.name === name);
+const { selectAll } = adapter.getSelectors();
+
+export const selectSidebarState = createFeatureSelector<SidebarState>('sidebar');
+
+export const selectSidebarItems = createSelector(
+  selectSidebarState,
+  selectAll
+);

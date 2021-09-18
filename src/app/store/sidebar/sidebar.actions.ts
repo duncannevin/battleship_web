@@ -1,31 +1,13 @@
-import {Action} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {INavData} from '@coreui/angular';
+import {PushChildINav} from '../../models/push-child-inav.model';
 
 export enum SidebarActionTypes {
   pushItem = '[Sidebar] Push item',
-  removeItem = '[Sidebar] Remove item'
+  removeItem = '[Sidebar] Remove item',
+  pushChildItem = '[Sidebar] Push child item'
 }
 
-export class SidebarAction implements Action {
-  type!: string;
-  payload?: {
-    push?: INavData,
-    remove?: string
-  }
-}
-
-export class PushSidebarItem implements SidebarAction {
-  type = SidebarActionTypes.pushItem
-
-  constructor(readonly payload: { push: INavData }) {
-  }
-}
-
-export class RemoveItem implements SidebarAction {
-  type = SidebarActionTypes.removeItem
-
-  constructor(readonly payload: { remove: string }) {
-  }
-}
-
-export type SidebarActions = PushSidebarItem | RemoveItem;
+export const pushSidebarItem = createAction(SidebarActionTypes.pushItem, props<{ iNav: INavData }>());
+export const pushSidebarChild = createAction(SidebarActionTypes.pushChildItem, props<{ childINav: PushChildINav }>());
+export const removeSidebarItem = createAction(SidebarActionTypes.removeItem, props<{ name: string}>());

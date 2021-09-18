@@ -3,48 +3,33 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
 import {State} from '../index';
 import {UserService} from '../../services/user.service';
-import {
-  GetUserDetails,
-  LoadUserFailure,
-  LoadUserSuccess,
-  LoginUser,
-  RegisterUser,
-  UserAction,
-  UserActionTypes
-} from './user.actions';
-import {catchError, map, mergeMap, tap} from 'rxjs/operators';
+import * as UserActions from './user.actions';
+import {catchError, exhaustMap, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {LocalStorageService, STORAGE_KEYS} from '../../services/local-storage.service';
 import {User} from '../../models/user.model';
+import {loadUserFailure, loadUserSuccess} from './user.actions';
 
 @Injectable()
 export class UserEffects {
   loginUser$ = createEffect(
     () => this.actions$
       .pipe(
-        ofType<LoginUser>(UserActionTypes.loginUser),
-        mergeMap((action: UserAction) => {
-          if (!action.payload || !action.payload.login) {
-            throw new Error('[getUserDetails] Invalid payload');
-          }
-
-          return this.userService.login(action.payload.login)
+        ofType(UserActions.loginUser),
+        exhaustMap((action) => (
+          this.userService.login(action.loginForm)
             .pipe(
               this.setUser()
             )
-        })
+        ))
       ));
 
   registerUser$ = createEffect(
     () => this.actions$
       .pipe(
-        ofType<RegisterUser>(UserActionTypes.registerUser),
-        mergeMap((action) => {
-          if (!action.payload || !action.payload.register) {
-            throw new Error('[loginUser$] Invalid payload');
-          }
-
-          return this.userService.register(action.payload.register)
+        ofType(UserActions.registerUser),
+        exhaustMap((action) => {
+          return this.userService.register(action.registerForm)
             .pipe(
               this.setUser()
             );
@@ -54,13 +39,9 @@ export class UserEffects {
   getUserDetails$ = createEffect(
     () => this.actions$
       .pipe(
-        ofType<GetUserDetails>(UserActionTypes.getUserDetails),
+        ofType(UserActions.getUserDetails),
         mergeMap((action) => {
-          if (!action.payload || !action.payload.user) {
-            throw new Error('[getUserDetails] Invalid payload');
-          }
-
-          return this.userService.getUserDetails(action.payload.user)
+          return this.userService.getUserDetails(action.user)
             .pipe(
               this.setUser()
             )
@@ -72,8 +53,8 @@ export class UserEffects {
     return (source: Observable<User>): Observable<Action> => {
       return source.pipe(
         tap((user) => (this.localStorage.setItem<User>(STORAGE_KEYS.USER, user))),
-        map((user) => (new LoadUserSuccess({user}))),
-        catchError((error) => of(new LoadUserFailure({error})))
+        map((user) => (loadUserSuccess({ user })),
+        catchError((error) => of(loadUserFailure( { error }))))
       );
     }
   }

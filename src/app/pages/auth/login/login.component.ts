@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {State} from '../../../store';
-import {LoginUser, UserActionTypes} from '../../../store/user/user.actions';
+import {loadUserFailure, loadUserSuccess, loginUser} from '../../../store/user/user.actions';
 import {Actions, ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {User} from '../../../models/user.model';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.submitted = true;
 
     if (this.loginForm.valid) {
-      this.store.dispatch(new LoginUser({login: this.loginForm.value}));
+      this.store.dispatch(loginUser({ loginForm: this.loginForm.value }));
     }
   }
 
@@ -53,10 +53,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private setupStreams() {
     this.loadUserSuccess$ = this.actions$
-      .pipe(ofType(UserActionTypes.loadUserSuccess));
+      .pipe(ofType(loadUserSuccess.type));
 
     this.loadUserFailure$ = this.actions$
-      .pipe(ofType(UserActionTypes.loadUserFailure));
+      .pipe(ofType(loadUserFailure.type));
   }
 
   private setupSubscriptions() {
