@@ -10,6 +10,8 @@ export function selectItemNameAsId(item: INavData) {
   return item.name!!;
 }
 
+export function pushChild() {}
+
 export const adapter: EntityAdapter<INavData> = createEntityAdapter<INavData>({
   selectId: selectItemNameAsId
 });
@@ -22,7 +24,21 @@ const reducer = createReducer(
     return adapter.addOne(iNav, state);
   }),
   on(SidebarActions.pushSidebarChild, (state, { childINav }) => {
-    return state;
+    const item = state.entities[childINav.name!!];
+
+    if (!item) {
+      return state;
+    }
+
+    delete childINav.name;
+
+    if (!item.children) {
+      item.children = [];
+    }
+
+    item.children.push(childINav);
+
+    return adapter.updateOne({ id: item.name!!, changes: item }, state);
   }),
   on(SidebarActions.removeSidebarItem, (state, { name }) => {
     return adapter.removeOne(name, state);

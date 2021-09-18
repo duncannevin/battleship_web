@@ -6,7 +6,10 @@ import {Store} from '@ngrx/store';
 import SpyObj = jasmine.SpyObj;
 import {MockStoreModule} from '../../../../mocks/store-mock/mock.store.module';
 import {UserState} from '../../../store/user/user.reducer';
-import {LoadUserFailure, LoadUserSuccess, LoginUser} from '../../../store/user/user.actions';
+import {
+  loadUserFailure,
+  loadUserSuccess, loginUser
+} from '../../../store/user/user.actions';
 import {Actions} from '@ngrx/effects';
 
 describe('LoginComponent', () => {
@@ -70,7 +73,7 @@ describe('LoginComponent', () => {
       });
 
       it('should not dispatch an action', () => {
-        expect(storeSpy.dispatch).not.toHaveBeenCalledWith(new LoginUser({ login: {email: '', password: ''}}))
+        expect(storeSpy.dispatch).not.toHaveBeenCalledWith(loginUser({ loginForm: {email: '', password: ''}}))
       });
     });
 
@@ -82,13 +85,13 @@ describe('LoginComponent', () => {
       });
 
       it('should dispatch LoginUser action', () => {
-        expect(storeSpy.dispatch).toHaveBeenCalledWith(new LoginUser({ login: {email: '', password: ''}}))
+        expect(storeSpy.dispatch).toHaveBeenCalledWith(loginUser({ loginForm: {email: '', password: ''}}))
       });
 
       describe('load user success subscription', () => {
         beforeEach(() => {
           spyOn(component.loadUserSuccessSub, 'unsubscribe').and.callThrough();
-          storeSpy.dispatch(new LoadUserSuccess({ user: { email: '', token: '', id: '', createdAt: ''}}));
+          storeSpy.dispatch(loadUserSuccess({ user: { email: '', token: '', id: '', createdAt: ''}}));
         });
 
         it('should navigate to /game', () => {
@@ -103,7 +106,7 @@ describe('LoginComponent', () => {
       describe('load user failure subscription', function () {
         beforeEach(() => {
           spyOn(console, 'log').and.callThrough();
-          storeSpy.dispatch(new LoadUserFailure({error: {}}));
+          storeSpy.dispatch(loadUserFailure({error: new Map()}));
         });
 
         it('should console log error', () => {

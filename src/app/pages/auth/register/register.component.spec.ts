@@ -7,7 +7,11 @@ import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {Actions} from '@ngrx/effects';
 import SpyObj = jasmine.SpyObj;
-import {LoadUserFailure, LoadUserSuccess, RegisterUser} from '../../../store/user/user.actions';
+import {
+  loadUserFailure,
+  loadUserSuccess,
+  registerUser
+} from '../../../store/user/user.actions';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -78,13 +82,13 @@ describe('RegisterComponent', () => {
       });
 
       it('should dispatch RegisterUser action', () => {
-        expect(storeSpy.dispatch).toHaveBeenCalledWith(new RegisterUser({ register: {email: '', password: ''}}))
+        expect(storeSpy.dispatch).toHaveBeenCalledWith(registerUser({ registerForm: {email: '', password: ''}}))
       });
 
       describe('load user success subscription', () => {
         beforeEach(() => {
           spyOn(component.loadUserSuccessSub, 'unsubscribe').and.callThrough();
-          storeSpy.dispatch(new LoadUserSuccess({ user: { email: '', token: '', id: '', createdAt: ''}}));
+          storeSpy.dispatch(loadUserSuccess({ user: { email: '', token: '', id: '', createdAt: ''}}));
         });
 
         it('should navigate to /game', () => {
@@ -99,7 +103,7 @@ describe('RegisterComponent', () => {
       describe('load user failure subscription', function () {
         beforeEach(() => {
           spyOn(console, 'log').and.callThrough();
-          storeSpy.dispatch(new LoadUserFailure({error: {}}));
+          storeSpy.dispatch(loadUserFailure({error: new Map()}));
         });
 
         it('should console log error', () => {
