@@ -8,7 +8,7 @@ import {catchError, exhaustMap, map, mergeMap, switchMap, tap} from 'rxjs/operat
 import {Observable, of} from 'rxjs';
 import {LocalStorageService, STORAGE_KEYS} from '../../services/local-storage.service';
 import {User} from '../../models/user.model';
-import {loadUserFailure, loadUserSuccess} from './user.actions';
+import {loadUserFailure, loadUserSuccess, logoutUser, resetUser} from './user.actions';
 
 @Injectable()
 export class UserEffects {
@@ -46,6 +46,15 @@ export class UserEffects {
               this.setUser()
             )
         })
+      )
+  );
+
+  logoutUser$ = createEffect(
+    () => this.actions$
+      .pipe(
+        ofType(UserActions.logoutUser),
+        tap(() => this.localStorage.removeItem(STORAGE_KEYS.USER)),
+        map(() => (resetUser()))
       )
   );
 

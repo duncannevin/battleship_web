@@ -19,6 +19,9 @@ const reducer = createReducer(
   }),
   on(UserActions.loadUserFailure, (state, { error }) => {
     return { user: null, error };
+  }),
+  on(UserActions.resetUser, () => {
+    return initialState;
   })
 );
 

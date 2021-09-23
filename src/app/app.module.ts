@@ -15,7 +15,9 @@ import {UserEffects} from "./store/user/user.effects";
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { AppSidebarModule } from '@coreui/angular'
+import { AppSidebarModule, AppHeaderModule } from '@coreui/angular'
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -40,7 +42,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     IconModule,
     IconSetModule.forRoot(),
     AppSidebarModule,
-    PerfectScrollbarModule
+    AppHeaderModule,
+    PerfectScrollbarModule,
+    BsDropdownModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     IconSetService
