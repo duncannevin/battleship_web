@@ -3,6 +3,7 @@ import {NgModule} from "@angular/core";
 import {AuthLayoutComponent} from "../../layouts/auth-layout/auth-layout.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {LogoutResolver} from '../../resolvers/logout.resolver';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,15 @@ export const routes: Routes = [
           title: 'register'
         },
         component: RegisterComponent
+      },
+      {
+        path: 'logout',
+        data: {
+          title: 'logout'
+        },
+        resolve: {
+          logout: LogoutResolver
+        }
       }
     ]
   }

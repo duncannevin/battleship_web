@@ -1,8 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {State} from '../../store';
-import {loadUserSuccess, logoutUser, resetUser} from '../../store/user/user.actions';
-import {Observable, Subscription} from 'rxjs';
 import {Actions, ofType} from '@ngrx/effects';
 import {Router} from '@angular/router';
 
@@ -11,9 +9,7 @@ import {Router} from '@angular/router';
   templateUrl: './game-layout.component.html',
   styleUrls: ['./game-layout.component.scss']
 })
-export class GameLayoutComponent implements OnInit, OnDestroy {
-  logoutUser$: Observable<any>;
-  logoutUserSub: Subscription;
+export class GameLayoutComponent implements OnInit {
   sidebarMinimized: boolean = false;
 
   toggleMinimize(e: boolean) {
@@ -21,25 +17,11 @@ export class GameLayoutComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.store.dispatch(logoutUser());
+    this.router.navigate(['/auth/logout']);
   }
 
   ngOnInit(): void {
-    this.logoutUser$ = this.actions$
-      .pipe(ofType(resetUser.type));
-
-    this.logoutUserSub = this.logoutUser$.subscribe(() => {
-      this.router.navigate(['/'])
-    });
-  }
-
-  ngOnDestroy() {
-    this.destroySubs();
   }
 
   constructor(private store: Store<State>, private actions$: Actions, private router: Router) { }
-
-  private destroySubs() {
-    this.logoutUserSub.unsubscribe();
-  }
 }
