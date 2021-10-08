@@ -12,7 +12,9 @@
         <a class="nav-link" href="#"><i class="icon-list"></i></a>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <a class="dropdown-item" href="#" (click)="logout()"><i class="fa fa-lock"></i>Logout</a>
+        <a class="dropdown-item" [routerLink]="['/game/stage']"><i class="fa fa-ship"></i>Stage</a>
+        <span class="dropdown-divider"></span>
+        <a class="dropdown-item" [routerLink]="['/auth/logout']"><i class="fa fa-lock"></i>Logout</a>
       </div>
     </li>
   </ul>

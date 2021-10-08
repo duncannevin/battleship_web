@@ -4,6 +4,7 @@ import {AuthLayoutComponent} from "../../layouts/auth-layout/auth-layout.compone
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {LogoutResolver} from '../../resolvers/logout.resolver';
+import {LogoutComponent} from './logout/logout.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +32,8 @@ export const routes: Routes = [
         },
         resolve: {
           logout: LogoutResolver
-        }
+        },
+        component: LogoutComponent
       }
     ]
   }
