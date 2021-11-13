@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Actions} from '@ngrx/effects';
+import {Store} from '@ngrx/store';
+import {State} from '../../../store';
+import {generateBoard} from '../../../store/board/board.actions';
 
 @Component({
   selector: 'app-stage',
@@ -7,7 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StageComponent implements OnInit {
 
-  constructor() { }
+  generateBoard() {
+    this.store.dispatch(generateBoard());
+  }
+
+  constructor(private actions$: Actions, private store: Store<State>) {
+  }
 
   ngOnInit(): void {
   }
